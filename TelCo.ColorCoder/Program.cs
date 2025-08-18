@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace TelCo.ColorCoder
 {
@@ -27,6 +25,7 @@ namespace TelCo.ColorCoder
         private static void Main(string[] args) /// Test code for the class
         {
             TestColorCoder.TestsForColorCoder();
+            //ConvertCSV.CreateCsv(filePath);
         }
     }
 }

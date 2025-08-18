@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using static TelCo.ColorCoder.Program;
 
 namespace TelCo.ColorCoder
