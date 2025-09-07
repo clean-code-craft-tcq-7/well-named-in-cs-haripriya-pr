@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using static TelCo.ColorCoder.Program;
-
 namespace TelCo.ColorCoder
 {
     internal class TestColorCoder
@@ -23,13 +22,19 @@ namespace TelCo.ColorCoder
             Debug.Assert(pairNumber == resultPairNumber);
         }
 
-        private static void TestReferenceManual()
+        private static void TestReferenceManualDisplay()
         {
-            Debug.Assert(ReferenceManual.PrintHeader() == $"| Pair Number | Major Color | Minor Color |\n| {string.Concat(Enumerable.Repeat("-",11))} | {string.Concat(Enumerable.Repeat("-", 11))} | {string.Concat(Enumerable.Repeat("-", 11))} |");
-            Debug.Assert(ReferenceManual.PrintRows(1, ColorConversion.GetColorFromPairNumber(1)) == "| 1           | White       | Blue        |");
-            ReferenceManual.PrintReferenceManual();
+            Debug.Assert(ReferenceManual.PrintHeaderDisplay() == $"| Pair Number | Major Color | Minor Color |\n| {string.Concat(Enumerable.Repeat("-",11))} | {string.Concat(Enumerable.Repeat("-", 11))} | {string.Concat(Enumerable.Repeat("-", 11))} |");
+            Debug.Assert(ReferenceManual.PrintRowsDisplay(1, ColorConversion.GetColorFromPairNumber(1)) == "| 1           | White       | Blue        |");
+            ReferenceManual.PrintReferenceManual(ReferenceManual.PrintHeaderDisplay,ReferenceManual.PrintRowsDisplay);
         }
 
+        private static void TestReferenceManualCsv()
+        {
+            Debug.Assert(ReferenceManual.PrintHeaderCsv() == "Pair Number,Major Color,Minor Color");
+            Debug.Assert(ReferenceManual.PrintRowsCsv(1, ColorConversion.GetColorFromPairNumber(1)) == "1,White,Blue");
+            ReferenceManual.PrintReferenceManual(ReferenceManual.PrintHeaderCsv, ReferenceManual.PrintRowsCsv);
+        }
         public static void TestsForColorCoder()
         {
             TestColorFromPairNumber(4, new ColorPair { majorColor = Color.White, minorColor = Color.Brown });
@@ -37,7 +42,8 @@ namespace TelCo.ColorCoder
             TestColorFromPairNumber(23, new ColorPair { majorColor = Color.Violet, minorColor = Color.Green });
             TestPairNumberFromColor(new ColorPair { majorColor = Color.Yellow, minorColor = Color.Green }, 18);
             TestPairNumberFromColor(new ColorPair { majorColor = Color.Red, minorColor = Color.Blue }, 6);
-            TestReferenceManual();
+            TestReferenceManualDisplay();
+            TestReferenceManualCsv();
         }
     }
 }

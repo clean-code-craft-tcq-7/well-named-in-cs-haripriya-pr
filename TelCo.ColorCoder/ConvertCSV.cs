@@ -12,10 +12,10 @@ namespace TelCo.ColorCoder
             {
                 using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.UTF8)) // false for overwrite, true for append
                 {
-                    writer.WriteLine(ReferenceManual.PrintHeader(','));
+                    writer.WriteLine(ReferenceManual.PrintHeaderCsv());
                     for (int idx = 1; idx <= Program.colorMapMajor.Length * Program.colorMapMinor.Length; idx++)
                     {
-                        writer.WriteLine(ReferenceManual.PrintRows(idx, ColorConversion.GetColorFromPairNumber(idx),','));
+                        writer.WriteLine(ReferenceManual.PrintRowsCsv(idx, ColorConversion.GetColorFromPairNumber(idx)));
                     }
                 }
                 Console.WriteLine($"CSV file '{filePath}' created successfully.");

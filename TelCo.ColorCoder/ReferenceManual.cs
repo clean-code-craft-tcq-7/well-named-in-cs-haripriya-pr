@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using static TelCo.ColorCoder.Program;
-
 namespace TelCo.ColorCoder
 {
     internal class ReferenceManual
@@ -17,31 +17,33 @@ namespace TelCo.ColorCoder
             }
             return valueWithSpace;
         }
-
-        public static string PrintHeader(char joinBy = '|') {
-            return (((joinBy == '|')?"| ": "") + ($"{AddExtraSpace(column1,maxColumn1)} {joinBy} {AddExtraSpace(column2, maxColumn2)} {joinBy} {AddExtraSpace(column3, maxColumn3)}") + ((joinBy == '|')? $" |\n| {string.Concat(Enumerable.Repeat("-",maxColumn1))} | {string.Concat(Enumerable.Repeat("-", maxColumn2))} | {string.Concat(Enumerable.Repeat("-", maxColumn3))} |" : ""));
+        public static string PrintHeaderDisplay(){
+            return ($"Reference Manual\n|{AddExtraSpace(column1, maxColumn1)} | {AddExtraSpace(column2, maxColumn2)} | {AddExtraSpace(column3, maxColumn3)} |\n| {string.Concat(Enumerable.Repeat("-", maxColumn1))} | {string.Concat(Enumerable.Repeat("-", maxColumn2))} | {string.Concat(Enumerable.Repeat("-", maxColumn3))} |");
         }
-
-        public static string PrintRows(int pairNumber, ColorPair colorPair, char joinBy = '|')
+        public static string PrintRowsDisplay(int pairNumber, ColorPair colorPair)
         {
-            return ((joinBy == '|'? "| " : "") + ($"{AddExtraSpace(pairNumber.ToString(), maxColumn1)} {joinBy} {AddExtraSpace(colorPair.majorColor.Name, maxColumn2)} {joinBy} {AddExtraSpace(colorPair.minorColor.Name, maxColumn3)}") +(joinBy == '|'? " |":""));
+            return ($"| {AddExtraSpace(pairNumber.ToString(), maxColumn1)} | {AddExtraSpace(colorPair.majorColor.Name, maxColumn2)} | {AddExtraSpace(colorPair.minorColor.Name, maxColumn3)} |");
         }
-
+        public static string PrintHeaderCsv()
+        {
+            return ($"{AddExtraSpace(column1, maxColumn1)},{AddExtraSpace(column2, maxColumn2)},{AddExtraSpace(column3, maxColumn3)}");
+        }
+        public static string PrintRowsCsv(int pairNumber, ColorPair colorPair)
+        {
+            return ($"{AddExtraSpace(pairNumber.ToString(), maxColumn1)},{AddExtraSpace(colorPair.majorColor.Name, maxColumn2)},{AddExtraSpace(colorPair.minorColor.Name, maxColumn3)}");
+        }
         private static void FindMax()
         {
             maxColumn1 = ((colorMapMajor.Length * colorMapMinor.Length).ToString().Length > maxColumn1 ? (colorMapMajor.Length * colorMapMinor.Length).ToString().Length : maxColumn1);
             colorMapMajor.Select(x => x.Name).ToList().ForEach(x => maxColumn2 = x.Length > maxColumn2 ? x.Length : maxColumn2);
             colorMapMinor.Select(x => x.Name).ToList().ForEach(x => maxColumn3 = x.Length > maxColumn3 ? x.Length : maxColumn3);
         }
-
-        public static void PrintReferenceManual()
-        {
+        public static void PrintReferenceManual(Func<string> header, Func<int,ColorPair,string> rows){
             FindMax();
-            Console.WriteLine("Reference Manual:");
-            Console.WriteLine(PrintHeader());
+            Console.WriteLine(header());
             for(int idx = 1; idx <= colorMapMajor.Length * colorMapMinor.Length; idx++)
             {
-                Console.WriteLine(PrintRows(idx,ColorConversion.GetColorFromPairNumber(idx)));
+                Console.WriteLine(rows(idx, ColorConversion.GetColorFromPairNumber(idx)));
             }
         }
     }
