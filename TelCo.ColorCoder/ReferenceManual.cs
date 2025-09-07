@@ -18,7 +18,7 @@ namespace TelCo.ColorCoder
             return valueWithSpace;
         }
         public static string PrintHeaderDisplay(){
-            return ($"Reference Manual\n|{AddExtraSpace(column1, maxColumn1)} | {AddExtraSpace(column2, maxColumn2)} | {AddExtraSpace(column3, maxColumn3)} |\n| {string.Concat(Enumerable.Repeat("-", maxColumn1))} | {string.Concat(Enumerable.Repeat("-", maxColumn2))} | {string.Concat(Enumerable.Repeat("-", maxColumn3))} |");
+            return ($"| {AddExtraSpace(column1, maxColumn1)} | {AddExtraSpace(column2, maxColumn2)} | {AddExtraSpace(column3, maxColumn3)} |\n| {string.Concat(Enumerable.Repeat("-", maxColumn1))} | {string.Concat(Enumerable.Repeat("-", maxColumn2))} | {string.Concat(Enumerable.Repeat("-", maxColumn3))} |");
         }
         public static string PrintRowsDisplay(int pairNumber, ColorPair colorPair)
         {
@@ -40,7 +40,7 @@ namespace TelCo.ColorCoder
         }
         public static void PrintReferenceManual(Func<string> header, Func<int,ColorPair,string> rows){
             FindMax();
-            Console.WriteLine(header());
+            Console.WriteLine("Reference Manual\n"+header());
             for(int idx = 1; idx <= colorMapMajor.Length * colorMapMinor.Length; idx++)
             {
                 Console.WriteLine(rows(idx, ColorConversion.GetColorFromPairNumber(idx)));
