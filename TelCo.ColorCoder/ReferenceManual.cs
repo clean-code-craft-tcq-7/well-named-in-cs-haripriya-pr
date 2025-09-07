@@ -30,7 +30,7 @@ namespace TelCo.ColorCoder
         }
         public static string PrintRowsCsv(int pairNumber, ColorPair colorPair)
         {
-            return ($"{AddExtraSpace(pairNumber.ToString(), maxColumn1)},{AddExtraSpace(colorPair.majorColor.Name, maxColumn2)},{AddExtraSpace(colorPair.minorColor.Name, maxColumn3)}");
+            return ($"{pairNumber},{colorPair.majorColor.Name},{colorPair.minorColor.Name}");
         }
         private static void FindMax()
         {
